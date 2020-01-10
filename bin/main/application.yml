@@ -1,0 +1,26 @@
+server:
+  port: 8000
+  error:
+    whitelabel:
+      enabled: false
+debug: true
+spring:
+  devtools:
+    restart:
+      enabled: true
+  profiles:
+    active: dev
+  application:
+    name: "KanbanBoard"
+
+
+#  autoconfigure:
+#    exclude:
+#    - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+  
+
+#  data:
+#    mongodb:
+#      host: 127.0.0.1
+#      port: 27017
+#      database: test_2
