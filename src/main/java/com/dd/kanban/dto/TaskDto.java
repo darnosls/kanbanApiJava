@@ -1,60 +1,43 @@
-package com.dd.kanban.entity;
+package com.dd.kanban.dto;
 
 import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
-import org.springframework.stereotype.Component;
+import org.hibernate.validator.constraints.Length;
 
+import com.dd.kanban.entity.User;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.DateSerializer;
 
-@Entity
-@Component
-@Table(name = "task")
-public class Task implements Serializable {
-	private static final long serialVersionUID = -1l;
+public class TaskDto implements Serializable{
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	private static final long serialVersionUID = -1L;
+
+
 	private Long id;
 
-	@Column(name = "name", nullable = false)
 	private String name;
 
-	@JsonSerialize(using = DateSerializer.class)
-	@Column(name = "init_date", nullable = false)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private Date initDate;
 
-	@JsonSerialize(using = DateSerializer.class)
-	@Column(name = "end_date", nullable = true)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private Date endDate;
 
-	@Column(name = "description", nullable = true)
+	@Column(name = "description", nullable = false)
 	private String description;
 
-	@Column(name = "sponsor", nullable = false)
 	private User sponsor;
 
-	public Task() {
+	public TaskDto() {
 
-	}
-
-	public Task(Long id, String name, Date initDate, Date endDate, String description, User sponsor) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.initDate = initDate;
-		this.endDate = endDate;
-		this.description = description;
-		this.sponsor = sponsor;
 	}
 
 	public Long getId() {
@@ -65,6 +48,8 @@ public class Task implements Serializable {
 		this.id = id;
 	}
 
+	@NotNull(message = "name is a required field")
+	@Length(min = 3,  max = 40, message = "name must be between 3 and 40 characters")
 	public String getName() {
 		return name;
 	}
@@ -73,8 +58,7 @@ public class Task implements Serializable {
 		this.name = name;
 	}
 
-
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+	@NotNull(message = "initial date is a required field")
 	public Date getInitDate() {
 		return initDate;
 	}
@@ -83,7 +67,6 @@ public class Task implements Serializable {
 		this.initDate = initDate;
 	}
 
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	public Date getEndDate() {
 		return endDate;
 	}
@@ -110,8 +93,9 @@ public class Task implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Task [id=" + id + ", name=" + name + ", initDate=" + initDate + ", endDate=" + endDate
+		return "TaskDto [id=" + id + ", name=" + name + ", initDate=" + initDate + ", endDate=" + endDate
 				+ ", description=" + description + ", sponsor=" + sponsor + "]";
 	}
+
 
 }

@@ -12,15 +12,14 @@ spring:
     active: dev
   application:
     name: "KanbanBoard"
-
-
-#  autoconfigure:
-#    exclude:
-#    - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
-  
-
-#  data:
-#    mongodb:
-#      host: 127.0.0.1
-#      port: 27017
-#      database: test_2
+  jpa:
+    database: MYSQL
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  datasource:
+    platform: mysql
+    url: jdbc:mysql://${DB_HOST}/kanban_board
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver # com.mysql.jdbc.Driver

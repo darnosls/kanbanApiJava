@@ -1,4 +1,4 @@
-package com.hello.world;
+package com.dd.kanban;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
