@@ -1,6 +1,7 @@
 package com.dd.kanban.entity;
 
 import java.io.Serializable;
+
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -16,102 +17,58 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.DateSerializer;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
 @Entity
 @Component
 @Table(name = "task")
+@ToString
+@NoArgsConstructor @AllArgsConstructor
 public class Task implements Serializable {
 	private static final long serialVersionUID = -1l;
 
 	@Id
+	@Getter
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
+	@Getter
+	@Setter
 	@Column(name = "name", nullable = false)
 	private String name;
 
+	@Setter
 	@JsonSerialize(using = DateSerializer.class)
 	@Column(name = "init_date", nullable = false)
 	private Date initDate;
 
+	@Setter
 	@JsonSerialize(using = DateSerializer.class)
 	@Column(name = "end_date", nullable = true)
 	private Date endDate;
 
+	@Getter
+	@Setter
 	@Column(name = "description", nullable = true)
 	private String description;
 
+	@Getter
+	@Setter
 	@Column(name = "sponsor", nullable = false)
 	private User sponsor;
-
-	public Task() {
-
-	}
-
-	public Task(Long id, String name, Date initDate, Date endDate, String description, User sponsor) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.initDate = initDate;
-		this.endDate = endDate;
-		this.description = description;
-		this.sponsor = sponsor;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
 
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	public Date getInitDate() {
 		return initDate;
 	}
 
-	public void setInitDate(Date initDate) {
-		this.initDate = initDate;
-	}
-
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	public Date getEndDate() {
 		return endDate;
-	}
-
-	public void setEndDate(Date endDate) {
-		this.endDate = endDate;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public User getSponsor() {
-		return sponsor;
-	}
-
-	public void setSponsor(User sponsor) {
-		this.sponsor = sponsor;
-	}
-
-	@Override
-	public String toString() {
-		return "Task [id=" + id + ", name=" + name + ", initDate=" + initDate + ", endDate=" + endDate
-				+ ", description=" + description + ", sponsor=" + sponsor + "]";
 	}
 
 }
