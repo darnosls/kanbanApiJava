@@ -17,17 +17,15 @@ import org.springframework.stereotype.Component;
 @Component
 @Table(name = "privilege")
 public class Privilege implements Serializable{
-	
+
 	private static final long serialVersionUID = -1l;
-	
+
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
  
-	@Column(name = "name", nullable = false)
     private String name;
- 
-	@Column(name = "roles", nullable = false)
+
     @ManyToMany(mappedBy = "privileges")
     private Collection<Role> roles;
 }

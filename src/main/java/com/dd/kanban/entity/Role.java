@@ -21,16 +21,14 @@ import org.springframework.stereotype.Component;
 public class Role implements Serializable{
 
 	private static final long serialVersionUID = -1l;
-	
+
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-	
-	@Column(name = "name", nullable = false)
+
     private String name;
-    
-	@Column(name = "users", nullable = false)
-    @ManyToMany(mappedBy = "roles")
+
+	@ManyToMany(mappedBy = "roles")
     private Collection<User> users;
 
 	@Column(name = "privileges", nullable = false)

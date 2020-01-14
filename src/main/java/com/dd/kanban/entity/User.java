@@ -17,33 +17,29 @@ import org.springframework.stereotype.Component;
 
 @Entity
 @Component
-@Table(name = "userask")
+@Table(name = "user")
 public class User implements Serializable{
 	private static final long serialVersionUID = -1l;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	
-	@Column(name = "first_name", nullable = false)
+
+	@Column(name = "first_name")
     private String firstName;
-	
-	@Column(name = "last_name", nullable = false)
+
+	@Column(name = "last_name")
     private String lastName;
-	
-	@Column(name = "email", nullable = false)
-    private String email;
-	
-	@Column(name = "password", nullable = false)
-    private String password;
-	
-	@Column(name = "enabled", nullable = false)
-    private boolean enabled;
-	
-	@Column(name = "token_expired", nullable = false)
+
+	private String email;
+
+	private String password;
+
+	private boolean enabled;
+
+	@Column(name = "token_expired")
     private boolean tokenExpired;
-	
-	@Column(name = "role", nullable = false)
+
 	@ManyToMany
     @JoinTable( 
         name = "users_roles", 
