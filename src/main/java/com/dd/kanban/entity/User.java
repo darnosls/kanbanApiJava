@@ -15,6 +15,9 @@ import javax.persistence.Table;
 
 import org.springframework.stereotype.Component;
 
+import lombok.Getter;
+import lombok.Setter;
+
 @Entity
 @Component
 @Table(name = "user")
@@ -22,21 +25,35 @@ public class User implements Serializable{
 	private static final long serialVersionUID = -1l;
 
 	@Id
+	@Getter
+	@Column(unique = true, nullable = false)
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
+	@Getter
+	@Setter
 	@Column(name = "first_name")
     private String firstName;
 
+	@Getter
+	@Setter
 	@Column(name = "last_name")
     private String lastName;
 
+	@Getter
+	@Setter
 	private String email;
 
+	@Getter
+	@Setter
 	private String password;
 
+	@Getter
+	@Setter
 	private boolean enabled;
 
+	@Getter
+	@Setter
 	@Column(name = "token_expired")
     private boolean tokenExpired;
 

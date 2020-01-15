@@ -5,7 +5,7 @@ plugins {
 	id "io.freefair.lombok" version "4.1.6"
 }
 
-group = 'com.hello'
+group = 'com.dd.kanban'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
 
@@ -21,7 +21,12 @@ dependencies {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa:1.0.0.RELEASE'
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web:2.2.2.RELEASE'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.security:spring-security-config:5.2.1.RELEASE'
+
+	implementation 'org.springframework.security:spring-security-test'
 	implementation 'org.springframework.boot:spring-boot-devtools:2.2.2.RELEASE'
 	implementation 'com.fasterxml.jackson.core:jackson-databind:2.10.1'
 
