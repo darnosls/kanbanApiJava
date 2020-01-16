@@ -30,15 +30,15 @@ public class User implements Serializable{
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
-	@Getter
-	@Setter
-	@Column(name = "first_name")
-    private String firstName;
 
 	@Getter
 	@Setter
-	@Column(name = "last_name")
-    private String lastName;
+    private String name;
+	
+	@Getter
+	@Setter
+	@Column(name = "user_name")
+    private String username;
 
 	@Getter
 	@Setter
@@ -57,6 +57,8 @@ public class User implements Serializable{
 	@Column(name = "token_expired")
     private boolean tokenExpired;
 
+	@Setter
+	@Getter
 	@ManyToMany
     @JoinTable( 
         name = "users_roles", 
