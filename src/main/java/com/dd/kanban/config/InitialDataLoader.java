@@ -28,41 +28,44 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 public class InitialDataLoader implements ApplicationListener<ContextRefreshedEvent> {
 	boolean alreadySetup = false;
-	
+
 	@Autowired
 	private UserRepository userRepository;
-	
+
 	@Autowired
 	private PrivilegeRepository privilegeRepository;
-	
+
 	@Autowired
 	private RoleRepository roleRepository;
-	
+
+	@Autowired
+	PasswordEncoder passwordEncoder;
+
 
 	@Override
 	@Transactional
 	public void onApplicationEvent(ContextRefreshedEvent event) {
 		log.info("======================================== InitialDataLoader: onApplicationEvent init ========================================");
-		
+
 		if (alreadySetup) {
 			log.info("InitialDataLoader: alreadySetup exist - (exit)");
 			return;
 		}
-		
-		 Privilege readPrivilege = createPrivilege(PrivilegeName.READ);
-	     Privilege writePrivilege = createPrivilege(PrivilegeName.WRITE);
-	     Privilege passwordPrivilege = createPrivilege(PrivilegeName.CHANGE_PASSWORD);
-	     
-	     List<Privilege> adminPrivileges = new ArrayList<Privilege>(Arrays.asList(readPrivilege, writePrivilege, passwordPrivilege));
-	     List<Privilege> userPrivileges = new ArrayList<Privilege>(Arrays.asList(readPrivilege, passwordPrivilege));
-	     Role adminRole = createRole(RoleName.ROLE_ADMIN, adminPrivileges);
-	     createRole(RoleName.ROLE_USER, userPrivileges);
-	     createUser("test@test.com", "test", "teste", "123456", new ArrayList<Role>(Arrays.asList(adminRole)));
-	     
-	     alreadySetup = true;
-	     log.info("======================================== InitialDataLoader: onApplicationEvent end ========================================");
+
+		Privilege readPrivilege = createPrivilege(PrivilegeName.READ);
+		Privilege writePrivilege = createPrivilege(PrivilegeName.WRITE);
+		Privilege passwordPrivilege = createPrivilege(PrivilegeName.CHANGE_PASSWORD);
+
+		List<Privilege> adminPrivileges = new ArrayList<Privilege>(Arrays.asList(readPrivilege, writePrivilege, passwordPrivilege));
+		List<Privilege> userPrivileges = new ArrayList<Privilege>(Arrays.asList(readPrivilege, passwordPrivilege));
+		Role adminRole = createRole(RoleName.ROLE_ADMIN, adminPrivileges);
+		createRole(RoleName.ROLE_USER, userPrivileges);
+		createUser("test@test.com", "test", "teste", "123456", new ArrayList<Role>(Arrays.asList(adminRole)));
+
+		alreadySetup = true;
+		log.info("======================================== InitialDataLoader: onApplicationEvent end ========================================");
 	}
-	
+
 	@Transactional
 	private Privilege createPrivilege(PrivilegeName name) {
 		log.info("InitialDataLoader: createPrivilege init");
@@ -74,11 +77,11 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 		log.info("InitialDataLoader: createPrivilege end");
 		return privilege;
 	}
-	
+
 	@Transactional
 	private Role createRole(RoleName name, Collection<Privilege> privileges) {
 		log.info("InitialDataLoader: createRole init");
-		
+
 		Role role = roleRepository.findByName(name);
 		if (role == null) {
 			role = new Role(name);
@@ -88,17 +91,17 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 		log.info("InitialDataLoader: createPrivilege end");
 		return role;
 	}
-	
+
 	@Transactional
 	private User createUser(String email, String name, String username, String password, Collection<Role> roles) {
 		log.info("InitialDataLoader: createUser init");
-		PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+
 		User user = userRepository.findByEmail(email);
 		if (user == null) {
 			user = new User();
 			user.setName(name);
 			user.setUsername(username);
-			user.setPassword(encoder.encode(password));
+			user.setPassword(passwordEncoder.encode(password));
 			user.setEmail(email);
 			user.setEnabled(true);
 		}

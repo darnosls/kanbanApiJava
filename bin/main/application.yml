@@ -4,6 +4,9 @@ server:
     whitelabel:
       enabled: false
 debug: true
+app:
+  jwtSecret: JWTSuperSecretKey
+  jwtExpirationInMs: 604800000
 spring:
   devtools:
     restart:

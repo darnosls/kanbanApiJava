@@ -6,4 +6,5 @@ import com.dd.kanban.entity.User;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 	User findByEmail(String email);
+	Boolean existsByEmail(String email);
 }

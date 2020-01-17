@@ -14,7 +14,11 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import com.dd.kanban.security.CustomUserDetailsService;
+import com.dd.kanban.security.JwtAuthenticationEntryPoint;
+import com.dd.kanban.security.JwtAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -26,59 +30,59 @@ import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	@Autowired
 	CustomUserDetailsService customUserDetailsService;
-	
+
 	@Autowired
 	private JwtAuthenticationEntryPoint unauthorizedHandler;
-	
+
 
 	@Bean
 	public JwtAuthenticationFilter jwtAuthenticationFilter() {
-		return jwtAuthenticationFilter();
+		return new JwtAuthenticationFilter();
 
 	}
-	
+
 	@Override
 	public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
 		authenticationManagerBuilder
 		.userDetailsService(customUserDetailsService)
 		.passwordEncoder(passwordEncoder());
 	}
-	
+
 	@Bean(BeanIds.AUTHENTICATION_MANAGER)
 	@Override
 	public AuthenticationManager authenticationManagerBean() throws Exception {
 		return super.authenticationManagerBean();
 	}
-	
+
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-	
+
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
 		httpSecurity
-			.cors()
-				.and()
-			.csrf()
-				.disable()
-			.exceptionHandling()
-				.authenticationEntryPoint(unauthorizedHandler)
-				.and()
-			.sessionManagement()
-				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-				.and()
-			.authorizeRequests()
-				.antMatchers("/", "/favicon.ico","/**/*.png","/**/*.gif","/**/*.svg","/**/*.jpg","/**/*.html","/**/*.css","/**/*.js")
-				.permitAll()
-			.antMatchers("/api/auth/**")
-				.permitAll()
-				.antMatchers("/api/user/checkUsernameAvailability", "/api/user/checkEmailAvailability")
-                .permitAll()
-            .antMatchers(HttpMethod.GET, "/api/polls/**", "/api/users/**")
-                .permitAll()
-            .anyRequest()
-                .authenticated();
+		.cors()
+		.and()
+		.csrf()
+		.disable()
+		.exceptionHandling()
+		.authenticationEntryPoint(unauthorizedHandler)
+		.and()
+		.sessionManagement()
+		.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+		.and()
+		.authorizeRequests()
+		.antMatchers("/", "/favicon.ico","/**/*.png","/**/*.gif","/**/*.svg","/**/*.jpg","/**/*.html","/**/*.css","/**/*.js")
+		.permitAll()
+		.antMatchers("/api/auth/**")
+		.permitAll()
+		.antMatchers("/api/user/checkUsernameAvailability", "/api/user/checkEmailAvailability")
+		.permitAll()
+		.antMatchers(HttpMethod.GET, "/api/polls/**", "/api/users/**")
+		.permitAll()
+		.anyRequest()
+		.authenticated();
 		httpSecurity.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 	}
 }

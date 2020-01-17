@@ -34,21 +34,21 @@ public class Privilege implements Serializable{
 	private static final long serialVersionUID = -1l;
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
- 
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
+
 	@Getter
 	@Setter
 	@NonNull
 	@Enumerated(EnumType.STRING)
 	@NaturalId
 	@Column(length = 60)
-    private PrivilegeName name;
+	private PrivilegeName name;
 
-    @ManyToMany(mappedBy = "privileges")
-    private Collection<Role> roles;
-    
-//    public Privilege() {
-//    	
-//    }
+	@ManyToMany(mappedBy = "privileges")
+	private Collection<Role> roles;
+
+	//    public Privilege() {
+	//    	
+	//    }
 }

@@ -30,15 +30,14 @@ public class User implements Serializable{
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
+	@Getter
+	@Setter
+	private String name;
 
 	@Getter
 	@Setter
-    private String name;
-	
-	@Getter
-	@Setter
 	@Column(name = "user_name")
-    private String username;
+	private String username;
 
 	@Getter
 	@Setter
@@ -55,17 +54,17 @@ public class User implements Serializable{
 	@Getter
 	@Setter
 	@Column(name = "token_expired")
-    private boolean tokenExpired;
+	private boolean tokenExpired;
 
 	@Setter
 	@Getter
 	@ManyToMany
-    @JoinTable( 
-        name = "users_roles", 
-        joinColumns = @JoinColumn(
-          name = "user_id", referencedColumnName = "id"), 
-        inverseJoinColumns = @JoinColumn(
-          name = "role_id", referencedColumnName = "id"))
+	@JoinTable(
+			name = "users_roles",
+			joinColumns = @JoinColumn(
+					name = "user_id", referencedColumnName = "id"),
+			inverseJoinColumns = @JoinColumn(
+					name = "role_id", referencedColumnName = "id"))
 	private Collection<Role> roles;
-	
+
 }

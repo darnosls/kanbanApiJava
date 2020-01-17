@@ -19,30 +19,30 @@ import lombok.Getter;
 @EqualsAndHashCode
 @AllArgsConstructor
 public class UserPrincipal implements UserDetails {
-	
+
 	@Getter
 	private Long id;
-	
+
 	@Getter
 	private String name;
-	
+
 	private String username;
-	
+
 	@Getter
 	@JsonIgnore
 	private String email;
-	
+
 	@JsonIgnore
 	private String password;
-	
+
 	private Collection<? extends GrantedAuthority> authorities;
-	
-	
+
+
 	public static UserPrincipal create(User user) {
 		List<GrantedAuthority> authorities = user.getRoles().stream().map(role ->
-				new SimpleGrantedAuthority(role.getName().name())
+		new SimpleGrantedAuthority(role.getName().name())
 				).collect(Collectors.toList());
-		
+
 		return new UserPrincipal(
 				user.getId(),
 				user.getName(),
@@ -62,7 +62,7 @@ public class UserPrincipal implements UserDetails {
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return authorities;
 	}
-	
+
 	@Override
 	public String getUsername() {
 		return username;
@@ -87,7 +87,7 @@ public class UserPrincipal implements UserDetails {
 	public boolean isEnabled() {
 		return true;
 	}
-	
-	
+
+
 
 }

@@ -36,8 +36,8 @@ public class Role implements Serializable{
 	private static final long serialVersionUID = -1l;
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
 
 	@Getter
 	@Setter
@@ -45,12 +45,12 @@ public class Role implements Serializable{
 	@Enumerated(EnumType.STRING)
 	@NaturalId
 	@Column(length = 60)
-    private RoleName name;
+	private RoleName name;
 
 	@Getter
 	@Setter
 	@ManyToMany(mappedBy = "roles")
-    private Collection<User> users;
+	private Collection<User> users;
 
 	@Getter
 	@Setter
@@ -63,5 +63,5 @@ public class Role implements Serializable{
 			inverseJoinColumns = @JoinColumn(
 					name = "privilege_id", referencedColumnName = "id"))
 	private Collection<Privilege> privileges;
-	
+
 }
