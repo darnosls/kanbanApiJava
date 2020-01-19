@@ -1,0 +1,31 @@
+server:
+  port: 8000
+  error:
+    whitelabel:
+      enabled: false
+debug: true
+app:
+  jwtSecret: JWTSuperSecretKey
+  jwtExpirationInMs: 604800000
+spring:
+  devtools:
+    restart:
+      enabled: true
+  profiles:
+    active: dev
+  application:
+    name: "KanbanBoard"
+  jpa:
+    database: MYSQL
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+  datasource:
+    platform: mysql
+    url: jdbc:mysql://${DB_HOST}/kanban_board
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver # com.mysql.jdbc.Driver
