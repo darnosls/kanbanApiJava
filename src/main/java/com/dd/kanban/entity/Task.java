@@ -38,18 +38,20 @@ public class Task implements Serializable {
 
 	@Getter
 	@Setter
-	@Column(name = "name", nullable = false)
-	private String name;
+	@Column(name = "title", nullable = false)
+	private String title;
 
+	@Getter
 	@Setter
 	@JsonSerialize(using = DateSerializer.class)
 	@Column(name = "init_date", nullable = false)
-	private Date initDate;
+	private Date createdAt;
 
+	@Getter
 	@Setter
 	@JsonSerialize(using = DateSerializer.class)
 	@Column(name = "end_date", nullable = true)
-	private Date endDate;
+	private Date updatedAt;
 
 	@Getter
 	@Setter
@@ -59,16 +61,23 @@ public class Task implements Serializable {
 	@Getter
 	@Setter
 	@Column(name = "sponsor", nullable = false)
-	private User sponsor;
+//	private User sponsor;
+	private String sponsor;
 
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-	public Date getInitDate() {
-		return initDate;
-	}
-
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-	public Date getEndDate() {
-		return endDate;
-	}
+	@Getter
+	@Setter
+	@Column(name = "step", nullable = false)
+//	private User sponsor;
+	private String step;
+	
+//	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+//	public Date getInitDate() {
+//		return initDate;
+//	}
+//
+//	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+//	public Date getEndDate() {
+//		return endDate;
+//	}
 
 }
