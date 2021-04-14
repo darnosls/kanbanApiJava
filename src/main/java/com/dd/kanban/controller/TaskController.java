@@ -40,7 +40,7 @@ public class TaskController {
 	@PostMapping(path = "/new")
 	@Secured(value = { "ROLE_ADMIN" })
 	public ResponseEntity<Response<Task>> create(@Valid @RequestBody TaskDto taskDto, BindingResult result) {
-		Response<Task> response = new Response<Task>();
+		Response<Task> response = new Response<>();
 
 		if(result.hasErrors()) {
 			result.getAllErrors().forEach(error -> response.getErrors().add(error.getDefaultMessage()));
@@ -61,7 +61,7 @@ public class TaskController {
 	public ResponseEntity<Response<Task>> find(@PathVariable("id") Long id) {
 		Task task = taskService.findTask(id);
 
-		Response<Task> response = new Response<Task>();
+		Response<Task> response = new Response<>();
 		response.setData(task);
 		return ResponseEntity.status(HttpStatus.OK).body(response);
 	}

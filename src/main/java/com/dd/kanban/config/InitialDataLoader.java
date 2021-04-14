@@ -17,7 +17,7 @@ import com.dd.kanban.entity.Privilege;
 import com.dd.kanban.entity.PrivilegeName;
 import com.dd.kanban.entity.Role;
 import com.dd.kanban.entity.RoleName;
-import com.dd.kanban.entity.User;
+import com.dd.kanban.entity.UserBoard;
 import com.dd.kanban.repository.PrivilegeRepository;
 import com.dd.kanban.repository.RoleRepository;
 import com.dd.kanban.repository.UserRepository;
@@ -93,12 +93,12 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 	}
 
 	@Transactional
-	private User createUser(String email, String name, String username, String password, Collection<Role> roles) {
+	private UserBoard createUser(String email, String name, String username, String password, Collection<Role> roles) {
 		log.info("InitialDataLoader: createUser init");
 
-		User user = userRepository.findByEmail(email);
+		UserBoard user = userRepository.findByEmail(email);
 		if (user == null) {
-			user = new User();
+			user = new UserBoard();
 			user.setName(name);
 			user.setUsername(username);
 			user.setPassword(passwordEncoder.encode(password));
