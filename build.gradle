@@ -15,7 +15,7 @@ repositories {
 
 dependencies {
 
-	implementation 'mysql:mysql-connector-java:8.0.28'
+	implementation 'mysql:mysql-connector-java:8.0.31'
 
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -29,6 +29,9 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-devtools'
 	implementation 'com.fasterxml.jackson.core:jackson-databind'
 	implementation 'io.jsonwebtoken:jjwt:0.2'
+
+	implementation 'org.springframework.cloud:spring-cloud-starter-sleuth:3.1.4'
+
 
 	implementation 'org.modelmapper:modelmapper:0.7.5'
 
