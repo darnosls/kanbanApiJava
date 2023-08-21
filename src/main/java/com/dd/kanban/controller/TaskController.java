@@ -7,6 +7,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.BindingResult;
@@ -37,7 +38,7 @@ public class TaskController {
 		return ResponseEntity.status(HttpStatus.OK).body(tasks);
 	}
 
-	@PostMapping(path = "/new")
+	@PostMapping(path = "/new", consumes = MediaType.APPLICATION_JSON_VALUE)
 	@Secured(value = { "ROLE_ADMIN" })
 	public ResponseEntity<Response<Task>> create(@Valid @RequestBody TaskDto taskDto, BindingResult result) {
 		Response<Task> response = new Response<>();

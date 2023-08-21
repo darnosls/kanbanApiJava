@@ -60,13 +60,13 @@ public class Task implements Serializable {
 
 	@Getter
 	@Setter
-	@Column(name = "sponsor", nullable = false)
+	@Column(name = "sponsor")
 //	private User sponsor;
 	private String sponsor;
 
 	@Getter
 	@Setter
-	@Column(name = "step", nullable = false)
+	@Column(name = "step")
 //	private User sponsor;
 	private String step;
 	

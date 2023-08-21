@@ -31,6 +31,7 @@ public class TaskService {
 		task.setTitle(taskDto.getTitle());
 		task.setCreatedAt(taskDto.getCreatedAt());
 		task.setUpdatedAt(taskDto.getUpdatedAt());
+		task.setStep("1");
 		task.setDescription(taskDto.getDescription());
 		task.setSponsor(currentUser.getName());
 
