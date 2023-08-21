@@ -26,8 +26,11 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Component
+
 public class InitialDataLoader implements ApplicationListener<ContextRefreshedEvent> {
-	boolean alreadySetup = false;
+
+	private final boolean alreadySetup = false;
+
 
 	@Autowired
 	private UserRepository userRepository;
@@ -47,7 +50,9 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 	public void onApplicationEvent(ContextRefreshedEvent event) {
 		log.info("======================================== InitialDataLoader: onApplicationEvent init ========================================");
 
-		if (alreadySetup) {
+		String INITIAL_USER = "test@test.com";
+		var initialUser = userRepository.findByEmail(INITIAL_USER);
+		if (initialUser != null) {
 			log.info("InitialDataLoader: alreadySetup exist - (exit)");
 			return;
 		}
@@ -60,9 +65,9 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 		List<Privilege> userPrivileges = new ArrayList<Privilege>(Arrays.asList(readPrivilege, passwordPrivilege));
 		Role adminRole = createRole(RoleName.ROLE_ADMIN, adminPrivileges);
 		createRole(RoleName.ROLE_USER, userPrivileges);
-		createUser("test@test.com", "test", "teste", "123456", new ArrayList<Role>(Arrays.asList(adminRole)));
+		createUser(INITIAL_USER, "test", "teste", "123456", new ArrayList<Role>(Arrays.asList(adminRole)));
 
-		alreadySetup = true;
+//		alreadySetup = true;
 		log.info("======================================== InitialDataLoader: onApplicationEvent end ========================================");
 	}
 
