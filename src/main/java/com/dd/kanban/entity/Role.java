@@ -33,7 +33,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class Role implements Serializable{
 
-	private static final long serialVersionUID = -1l;
+	private static final long serialVersionUID = -1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -50,7 +50,7 @@ public class Role implements Serializable{
 	@Getter
 	@Setter
 	@ManyToMany(mappedBy = "roles")
-	private Collection<User> users;
+	private Collection<UserBoard> users;
 
 	@Getter
 	@Setter

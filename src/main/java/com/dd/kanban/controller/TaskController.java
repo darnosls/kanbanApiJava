@@ -7,7 +7,9 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,17 +31,17 @@ public class TaskController {
 	@Autowired
 	private TaskService taskService;
 
-	@GetMapping
+	@GetMapping(path = "/list")
+	@Secured(value = { "ROLE_ADMIN" })
 	public ResponseEntity<List<Task>> list() {
-
 		List<Task> tasks = taskService.list();
-
 		return ResponseEntity.status(HttpStatus.OK).body(tasks);
 	}
 
-	@PostMapping(path = "/new")
+	@PostMapping(path = "/new", consumes = MediaType.APPLICATION_JSON_VALUE)
+	@Secured(value = { "ROLE_ADMIN" })
 	public ResponseEntity<Response<Task>> create(@Valid @RequestBody TaskDto taskDto, BindingResult result) {
-		Response<Task> response = new Response<Task>();
+		Response<Task> response = new Response<>();
 
 		if(result.hasErrors()) {
 			result.getAllErrors().forEach(error -> response.getErrors().add(error.getDefaultMessage()));
@@ -56,11 +58,11 @@ public class TaskController {
 		return ResponseEntity.created(location).body(response);
 	}
 
-	@GetMapping(path = "/{id")
+	@GetMapping(path = "/{id}")
 	public ResponseEntity<Response<Task>> find(@PathVariable("id") Long id) {
 		Task task = taskService.findTask(id);
 
-		Response<Task> response = new Response<Task>();
+		Response<Task> response = new Response<>();
 		response.setData(task);
 		return ResponseEntity.status(HttpStatus.OK).body(response);
 	}

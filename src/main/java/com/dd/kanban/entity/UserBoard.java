@@ -21,7 +21,7 @@ import lombok.Setter;
 @Entity
 @Component
 @Table(name = "user")
-public class User implements Serializable{
+public class UserBoard implements Serializable{
 	private static final long serialVersionUID = -1l;
 
 	@Id

@@ -6,6 +6,7 @@ import java.util.Arrays;
 
 import javax.validation.Valid;
 
+import com.dd.kanban.entity.UserBoard;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.HttpStatus;
@@ -23,7 +24,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.dd.kanban.entity.Role;
 import com.dd.kanban.entity.RoleName;
-import com.dd.kanban.entity.User;
 import com.dd.kanban.repository.RoleRepository;
 import com.dd.kanban.repository.UserRepository;
 import com.dd.kanban.request.LoginRequest;
@@ -32,28 +32,27 @@ import com.dd.kanban.response.ApiResponse;
 import com.dd.kanban.response.JwtAuthenticationResponse;
 import com.dd.kanban.security.JwtTokenProvider;
 
-import java.util.Collections;
-
 @SpringBootApplication
 @RestController
 @RequestMapping("/api/auth")
 public class AuthenticationController {
 
-	@Autowired
-	AuthenticationManager authenticationManager;
+
+	private final AuthenticationManager authenticationManager;
+	private final UserRepository userRepository;
+	private final RoleRepository roleRepository;
+	private final PasswordEncoder passwordEncoder;
+	private final JwtTokenProvider tokenProvider;
 
 	@Autowired
-	UserRepository userRepository;
-
-	@Autowired
-	RoleRepository roleRepository;
-
-	@Autowired
-	PasswordEncoder passwordEncoder;
-
-	@Autowired
-	JwtTokenProvider tokenProvider;
-
+	AuthenticationController(AuthenticationManager authenticationManager, UserRepository userRepository,
+							 RoleRepository roleRepository, PasswordEncoder passwordEncode, JwtTokenProvider tokenProvider) {
+		this.authenticationManager = authenticationManager;
+		this.userRepository = userRepository;
+		this.roleRepository = roleRepository;
+		this.passwordEncoder = passwordEncode;
+		this.tokenProvider = tokenProvider;
+	}
 
 	@PostMapping("/signin")
 	public ResponseEntity<?> authUser(@Valid @RequestBody LoginRequest loginRequest) {
@@ -79,9 +78,9 @@ public class AuthenticationController {
 
 		Role userRole = roleRepository.findByName(RoleName.ROLE_USER);
 		//.orElseThrow(() -> new ApiException("User Role not set."));
-		User user = new User();
+		UserBoard user = new UserBoard();
 
-		user = new User();
+
 		user.setName(signUpRequest.getName());
 		user.setUsername(signUpRequest.getUsername());
 		user.setPassword(passwordEncoder.encode(signUpRequest.getPassword()));
@@ -89,7 +88,7 @@ public class AuthenticationController {
 		user.setEnabled(true);
 		user.setRoles(new ArrayList<Role>(Arrays.asList(userRole)));
 
-		User result = userRepository.save(user);
+		UserBoard result = userRepository.save(user);
 
 		URI location = ServletUriComponentsBuilder
 				.fromCurrentContextPath().path("/api/users/{username}")

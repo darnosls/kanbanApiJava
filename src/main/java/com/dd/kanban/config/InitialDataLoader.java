@@ -17,7 +17,7 @@ import com.dd.kanban.entity.Privilege;
 import com.dd.kanban.entity.PrivilegeName;
 import com.dd.kanban.entity.Role;
 import com.dd.kanban.entity.RoleName;
-import com.dd.kanban.entity.User;
+import com.dd.kanban.entity.UserBoard;
 import com.dd.kanban.repository.PrivilegeRepository;
 import com.dd.kanban.repository.RoleRepository;
 import com.dd.kanban.repository.UserRepository;
@@ -26,8 +26,11 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Component
+
 public class InitialDataLoader implements ApplicationListener<ContextRefreshedEvent> {
-	boolean alreadySetup = false;
+
+	private final boolean alreadySetup = false;
+
 
 	@Autowired
 	private UserRepository userRepository;
@@ -47,7 +50,9 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 	public void onApplicationEvent(ContextRefreshedEvent event) {
 		log.info("======================================== InitialDataLoader: onApplicationEvent init ========================================");
 
-		if (alreadySetup) {
+		String INITIAL_USER = "test@test.com";
+		var initialUser = userRepository.findByEmail(INITIAL_USER);
+		if (initialUser != null) {
 			log.info("InitialDataLoader: alreadySetup exist - (exit)");
 			return;
 		}
@@ -60,9 +65,9 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 		List<Privilege> userPrivileges = new ArrayList<Privilege>(Arrays.asList(readPrivilege, passwordPrivilege));
 		Role adminRole = createRole(RoleName.ROLE_ADMIN, adminPrivileges);
 		createRole(RoleName.ROLE_USER, userPrivileges);
-		createUser("test@test.com", "test", "teste", "123456", new ArrayList<Role>(Arrays.asList(adminRole)));
+		createUser(INITIAL_USER, "test", "teste", "123456", new ArrayList<Role>(Arrays.asList(adminRole)));
 
-		alreadySetup = true;
+//		alreadySetup = true;
 		log.info("======================================== InitialDataLoader: onApplicationEvent end ========================================");
 	}
 
@@ -93,12 +98,12 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 	}
 
 	@Transactional
-	private User createUser(String email, String name, String username, String password, Collection<Role> roles) {
+	private UserBoard createUser(String email, String name, String username, String password, Collection<Role> roles) {
 		log.info("InitialDataLoader: createUser init");
 
-		User user = userRepository.findByEmail(email);
+		UserBoard user = userRepository.findByEmail(email);
 		if (user == null) {
-			user = new User();
+			user = new UserBoard();
 			user.setName(name);
 			user.setUsername(username);
 			user.setPassword(passwordEncoder.encode(password));

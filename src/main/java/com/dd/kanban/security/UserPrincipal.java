@@ -9,7 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.dd.kanban.entity.User;
+import com.dd.kanban.entity.UserBoard;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
@@ -38,7 +38,7 @@ public class UserPrincipal implements UserDetails {
 	private Collection<? extends GrantedAuthority> authorities;
 
 
-	public static UserPrincipal create(User user) {
+	public static UserPrincipal create(UserBoard user) {
 		List<GrantedAuthority> authorities = user.getRoles().stream().map(role ->
 		new SimpleGrantedAuthority(role.getName().name())
 				).collect(Collectors.toList());

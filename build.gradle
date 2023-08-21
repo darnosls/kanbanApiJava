@@ -7,7 +7,7 @@ plugins {
 
 group = 'com.dd.kanban'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '1.8'
+sourceCompatibility = '11'
 
 repositories {
 	mavenCentral()
@@ -15,7 +15,7 @@ repositories {
 
 dependencies {
 
-	implementation 'mysql:mysql-connector-java:8.0.18'
+	implementation 'mysql:mysql-connector-java:8.0.23'
 
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
@@ -30,6 +30,9 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-devtools:2.2.2.RELEASE'
 	implementation 'com.fasterxml.jackson.core:jackson-databind:2.10.1'
 	implementation 'io.jsonwebtoken:jjwt:0.2'
+	
+	implementation 'org.modelmapper:modelmapper:0.7.5'
+	
 
 
 }

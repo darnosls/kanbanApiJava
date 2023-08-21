@@ -7,5 +7,5 @@ import com.dd.kanban.entity.Task;
 
 @Repository
 public interface TaskRepository extends JpaRepository<Task, Long>{
-	Task findByName(String name);
+	Task findByTitle(String title);
 }
