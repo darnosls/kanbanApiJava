@@ -24,8 +24,10 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
   datasource:
-    platform: mysql
     url: jdbc:mysql://localhost:3306/kanban
     username: root
     password: root
-    driver-class-name: com.mysql.cj.jdbc.Driver # com.mysql.jdbc.Driver
+#    driver-class-name: com.mysql.cj.jdbc.Driver # com.mysql.jdbc.Driver
+  sql:
+    init:
+      platform: mysql
