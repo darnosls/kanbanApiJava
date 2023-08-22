@@ -1,6 +1,6 @@
 package com.dd.kanban.util;
 
-import javax.persistence.EntityManager;
+import jakarta.persistence.EntityManager;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;

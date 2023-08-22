@@ -1,7 +1,7 @@
 package com.dd.kanban.request;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 import lombok.Getter;
 import lombok.Setter;

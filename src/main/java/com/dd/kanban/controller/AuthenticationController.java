@@ -4,7 +4,7 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 import com.dd.kanban.entity.UserBoard;
 import org.springframework.beans.factory.annotation.Autowired;
